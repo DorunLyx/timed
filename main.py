@@ -39,11 +39,21 @@ def get_tianxing():
     key = config["tianxing_API"]
     region_url = "https://apis.tianapi.com/caihongpi/index?key={}".format( key)
     response = get(region_url, headers=headers).json()
-    if response["code"] == "200":
-        pipi = response["result"][0]["content"]
-    return pipi
+    if response["code"] == "404":
+        print("推送消息失败，请检查地区名是否有误！")
+        os.system("pause")
+        content = '小媳妇儿 我爱你'
+        sys.exit(1)
+    elif response["code"] == "401":
+        print("推送消息失败，请检查和风天气key是否正确！")
+        os.system("pause")
+        content = '小媳妇儿 我爱你'
+        sys.exit(1)
+    else:
+        content = response["result"][0]["content"]
+    return content
 
-def send_message(to_user, access_token, pipi):
+def send_message(to_user, access_token, content):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
    
     data = {
@@ -53,7 +63,7 @@ def send_message(to_user, access_token, pipi):
         "topcolor": "#FF0000",
         "data": {
             "pipi": {
-                "value": pipi,
+                "value": content,
                 "color": get_color()
             }
         }
@@ -95,9 +105,9 @@ if __name__ == "__main__":
     # 接收的用户
     users = config["user"]
     # 获取彩虹屁
-    pipi = get_tianxing()
+    content = get_tianxing()
 
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, pipi)
+        send_message(user, accessToken, content)
     os.system("pause")
