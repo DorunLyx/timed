@@ -43,14 +43,8 @@ def get_tianxing():
         pipi = response["result"][0]["content"]
     return pipi
 
-def send_message(to_user, access_token,pipi):
+def send_message(to_user, access_token, pipi):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
-    week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-    year = localtime().tm_year
-    month = localtime().tm_mon
-    day = localtime().tm_mday
-    today = datetime.date(datetime(year=year, month=month, day=day))
-    week = week_list[today.isoweekday() % 7]
    
     data = {
         "touser": to_user,
@@ -100,8 +94,10 @@ if __name__ == "__main__":
     accessToken = get_access_token()
     # 接收的用户
     users = config["user"]
+    # 获取彩虹屁
+    pipi = get_tianxing()
 
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken)
+        send_message(user, accessToken， pipi)
     os.system("pause")
