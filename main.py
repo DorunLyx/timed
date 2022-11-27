@@ -50,7 +50,7 @@ def get_tianxing():
         content = '小媳妇儿 我爱你'
         sys.exit(1)
     else:
-        content = response["result"][0]["content"]
+        content = response["result"]["content"]
     return content
 
 def send_message(to_user, access_token, content):
