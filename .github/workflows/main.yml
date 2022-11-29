@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   schedule: 
     # 每2小时提示一次
-    - cron: '30 */2 * * *'
+    - cron: '30 */3 * * *'
 jobs:
 #将工作流程中运行的所有作业组合在一起
   build:
